@@ -1,0 +1,18 @@
+install_pkg:
+
+  "opengauss_1_0_1_centos_x86_64": "openGauss-1.0.1-CentOS_x86-64bit-all.tar.gz"
+  opengauss_1_0_1_openeuler_arm: "openGauss-1.0.1-openEuler_arm-64bit-all.tar.gz"
+  opengauss_1_0_1_openeuler_x86_64: "openGauss-1.0.1-openEuler_x86-64bit-all.tar.gz"
+
+  mogdb_1_1_0_openeuler_arm: "MogDB-1.1.0-openEuler_arm-64bit-all.tar.gz"
+  opengauss_1_1_0_openeuler_arm: "openGauss-1.1.0-openEuler_arm-64bit-all.tar.gz"
+  opengauss_1_1_0_openeuler_x86_64: "openGauss-1.1.0-openEuler_x86-64bit-all.tar.gz"
+  opengauss_1_1_0_centos_x86_64: "openGauss-1.1.0-CentOS_x86-64bit-all.tar.gz"
+
+  mogdb_2_0_0_openeulerr_arm: "MogDB-2.0.0-openEuler_arm-64bit-all.tar.gz"
+  opengauss_2_0_0_openeuler_arm: "openGauss-2.0.0-openEuler_arm-64bit-all.tar.gz"
+  opengauss_2_0_0_openeuler_x86_64: "openGauss-2.0.0-openEuler_x86-64bit-all.tar.gz"
+  opengauss_2_0_0_centos_x86_64: "openGauss-2.0.0-CentOS_x86-64bit-all.tar.gz"
+
+
+
