@@ -139,7 +139,7 @@ func ceshi3() {
 		DatabaseName: "mogdb",
 		Host:         "192.168.1.58",
 		Port:         "26000",
-		Username:    "mogdb",
+		Username:     "mogdb",
 		Password:     "qweca",
 	})
 	if res.Error != nil {
@@ -148,19 +148,15 @@ func ceshi3() {
 	}
 }
 
-
-
-
 func ceshi2(id int64) {
 	dbInfo := DatabaseInfo{}
-	res :=Connection.First(&dbInfo, id)
+	res := Connection.First(&dbInfo, id)
 	if res.Error != nil {
 		return
 	}
 	logrus.Info(dbInfo)
 
 }
-
 
 func ceshi(Desc bool, PageNum int, PageLimit int, Search, Order string) {
 	var desc string
@@ -189,9 +185,11 @@ func ceshi(Desc bool, PageNum int, PageLimit int, Search, Order string) {
 	if totalData.Error != nil {
 		return
 	}
-	logrus.Info(databaseInfos,total,"\n")
+	logrus.Info(databaseInfos, total, "\n")
 
 }
+
+// Camel2Case 小驼峰转换  xxXx转换为xx_xx
 func Camel2Case(name string) string {
 	buffer := NewBuffer()
 	for i, r := range name {
