@@ -2,7 +2,9 @@ package main
 
 import (
 	"bytes"
+	"context"
 	"database/sql"
+	"encoding/json"
 	"fmt"
 	"log"
 	"strconv"
@@ -11,6 +13,7 @@ import (
 	"unicode"
 
 	_ "gitee.com/opengauss/openGauss-connector-go-pq"
+	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -36,10 +39,10 @@ func main() {
 	Connection = gormDB
 	opengauss = gormDB
 
-	if err = autoMigrateTable(); err != nil {
-		logrus.Errorf(fmt.Sprintf("autoMigrated  error  is %v", err))
-		return
-	}
+	//if err = autoMigrateTable(); err != nil {
+	//	logrus.Errorf(fmt.Sprintf("autoMigrated  error  is %v", err))
+	//	return
+	//}
 	// 添加信息
 	//Connection.Create(&Cluster{
 	//	ID:            411111111111,
@@ -99,14 +102,70 @@ func main() {
 	//	return
 	//}
 	//logrus.Printf("%v", res[0].ID)
-	ceshi(true, 1, 10, "", "creationTime")
-	ceshi3()
-	ceshi2(411111111114)
+	//ceshi(true, 1, 10, "", "creationTime")
+	//ceshi3()
+	//ceshi2(411111111114)
+	//ceshi4()
+	//ceshi5()
+	//ceshi6()
+	ceshi7()
 }
 
+func ceshi4() {
+	res := []*DatabaseInfo{}
+	err := Connection.WithContext(context.Background()).Table("mog_database_info").Joins("left join mog_cluster_info on mog_database_info.cluster_id = mog_cluster_info.id where mog_cluster_info.cluster_status  in ? and mog_database_info.turn_on_monitor = ? and mog_database_info.node_status in ?", []int{2, 0}, true, []int{0, 2}).Scan(&res).Error
+	if err != nil {
+		return
+	}
+
+	logrus.Println(mapToJson(res))
+}
+func ceshi5() {
+	res := []*DatabaseInfo{}
+	err := Connection.Where(map[string]interface{}{"node_status": []int{0, 2}, "turn_on_monitor": true}).Preload("Cluster", "cluster_status in (?)", []int{2, 0}).Find(&res)
+	if err != nil {
+		return
+	}
+
+	logrus.Println(mapToJson(res))
+}
+func ceshi6() {
+	res := []*DatabaseInfo{}
+	sqlRow := "SELECT mog_database_info.* FROM mog_database_info  LEFT JOIN mog_cluster_info on mog_database_info.cluster_id = mog_cluster_info.id WHERE mog_database_info.node_status IN ? AND mog_database_info.turn_on_monitor = ? AND mog_cluster_info.cluster_status IN ?"
+	//sqls:= fmt.Sprintf(sqlRow,[]int{0,2},true,[]int{0,2})
+	if err := Connection.Raw(sqlRow, []int{0, 2}, true, []int{0, 2}).Scan(&res).Error; err != nil {
+
+	}
+	//logrus.Println(len(dbInfos))
+	logrus.Println(mapToJson(res))
+}
+
+func ceshi7() {
+	//res:= struct {
+	//	BlockSize string `json:"current_setting"`
+	//}{}
+	var res string
+	sqlRow := "select current_setting('block_size');"
+	sqlRow1 := "select current_setting('wal_segment_size');"
+	if err := Connection.Raw(sqlRow).Scan(&res).Error; err != nil {
+		logrus.Println(errors.Wrap(err, "查询数据库错误"))
+	}
+	logrus.Println("block", mapToJson(res))
+	if err := Connection.Raw(sqlRow1).Scan(&res).Error; err != nil {
+		logrus.Println(errors.Wrap(err, "查询数据库错误"))
+	}
+	logrus.Println(mapToJson(res))
+}
+
+func mapToJson(result interface{}) string {
+	// map转 json str
+	jsonBytes, _ := json.Marshal(result)
+	jsonStr := string(jsonBytes)
+	return jsonStr
+}
 func ConnectDB() (*sql.DB, error) {
 	dsn := fmt.Sprintf("host=%s user=%s password=%s port=%s dbname=%s sslmode=%s connect_timeout=%s session_timeout=0",
-		"127.0.0.1", "enmotech", "Enmo@123", "54321", "baikai", "disable", "5")
+		"123.60.223.33", "enmotech", "Enmo@123", "8106", "enmotech", "disable", "5")
 	//dsn := GetDSN(host, port, username, password, dbName)
 	db, err := sql.Open("opengauss", dsn)
 	if err != nil {

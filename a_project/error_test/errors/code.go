@@ -1,7 +1,7 @@
 package errors
 
 import (
-	"baikai/leetcode/a_project/8/i18n"
+	"baikai/leetcode/a_project/error_test/i18n"
 )
 
 const (

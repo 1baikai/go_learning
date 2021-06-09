@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"baikai/leetcode/a_project/8/i18n"
+	"baikai/leetcode/a_project/error_test/i18n"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )

@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strings"
 
-	le "baikai/leetcode/a_project/8/errors"
+	le "baikai/leetcode/a_project/error_test/errors"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 )
@@ -53,5 +53,5 @@ func httpResponse(code int, msg string, data interface{}) *HTTPResponse {
 }
 
 func HTTPRequestSuccess(c *gin.Context, code int, data interface{}) {
-	c.JSON(http.StatusOK, httpResponse( code, "ssss", data))
+	c.JSON(http.StatusOK, httpResponse(code, "ssss", data))
 }

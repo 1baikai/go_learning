@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package pb;
+
+
+
+//The BProject service definition.
+service BProject {
+ rpc AddUser (AddUserRequest) returns (AddUserReply);
+ rpc GetUser (GetUserRequest) returns (GetUserReply);
+}
+
+message AddUserRequest {
+  string username =1;
+  string fraction=2;
+}
+
+message AddUserReply {}
+
+message GetUserRequest {
+ int64 userID =1;
+}
+
+message GetUserReply {
+ string username =1;
+ string fraction=2;
+}
+
